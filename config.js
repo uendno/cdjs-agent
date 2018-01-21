@@ -11,6 +11,8 @@ module.exports = {
     },
 
     agentMessages: {
+        SET_ENV: 'SET_ENV',
+        SET_ENV_COMPLETE: 'SET_ENV_COMPLETE',
         PREPARE_DIR: 'PREPARE_DIR',
         PREPARE_DIR_COMPLETE: 'PREPARE_DIR_COMPLETE',
         CLONE: 'CLONE',

@@ -126,10 +126,11 @@ const npmInstall = (job, repoPath, log) => {
  * @param build
  * @param job
  * @param repoPath
+ * @param env
  * @param log
  * @param saveBuild
  */
-const runScript = (build, job, repoPath, log, saveBuild) => {
+const runScript = (build, job, repoPath, env, log, saveBuild) => {
 
     const cdjsFilePath = path.join(repoPath, job.cdFilePath);
 
@@ -153,10 +154,10 @@ const runScript = (build, job, repoPath, log, saveBuild) => {
             return new Promise((resolve, reject) => {
                 const cli = child_process.fork("cd.js", [], {
                     cwd: repoPath,
-                    env: {
+                    env: Object.assign(env, {
                         CDJS_GIT_USERNAME: job.credential && job.credential.data.username,
-                        CDJS_GIT_ACCESS_TOKEN: job.credential && job.credential.data.password
-                    },
+                        CDJS_GIT_PASSWORD: job.credential && job.credential.data.password
+                    }),
                     stdio: ['pipe', 'pipe', 'pipe', 'ipc']
                 });
 
@@ -285,6 +286,7 @@ const createListener = (buildId) => {
 
     const debug = require('debug')('build:' + buildId);
 
+    let env;
     let repoPath;
 
     const log = (message, level, options) => {
@@ -318,6 +320,14 @@ const createListener = (buildId) => {
         debug('Receive: ' + message.type);
 
         switch (message.type) {
+
+            case agentMessages.SET_ENV: {
+                env = data;
+                return sendMessage(buildId, {
+                    type: agentMessages.SET_ENV_COMPLETE,
+                })
+            }
+
             case agentMessages.PREPARE_DIR: {
                 return prepareDir(data.build, data.job, log)
                     .then(() => {
@@ -372,7 +382,7 @@ const createListener = (buildId) => {
             }
 
             case agentMessages.RUN_SCRIPT: {
-                return runScript(data.build, data.job, repoPath, log, saveBuild)
+                return runScript(data.build, data.job, repoPath, env, log, saveBuild)
                     .then(() => {
 
                         debug('Sending: ' + agentMessages.RUN_SCRIPT_COMPLETE);
