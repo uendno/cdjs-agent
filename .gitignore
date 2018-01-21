@@ -58,8 +58,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
-
-.gitignore
-helpers/
-services/
