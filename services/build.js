@@ -102,7 +102,7 @@ const npmInstall = (job, repoPath, log) => {
     const cli = child_process.spawn('yarn || npm install', {
         cwd: repoPath,
         shell: true,
-        stdio: ['pipe', 'pipe', 'pipe']
+        stdio: ['pipe', 'pipe', 'pipe'],
     });
 
     cli.stdout.on('data', data => log(ansiEscape(data.toString()), 'info'));
@@ -152,12 +152,13 @@ const runScript = (build, job, repoPath, env, log, saveBuild) => {
         .then(build => {
 
             return new Promise((resolve, reject) => {
-                const cli = child_process.fork("cd.js", [], {
+                const cli = child_process.spawn('node cd.js', {
                     cwd: repoPath,
-                    env: Object.assign(env, {
+                    env: Object.assign(process.env, env, {
                         CDJS_GIT_USERNAME: job.credential && job.credential.data.username,
                         CDJS_GIT_PASSWORD: job.credential && job.credential.data.password
                     }),
+                    shell: true,
                     stdio: ['pipe', 'pipe', 'pipe', 'ipc']
                 });
 

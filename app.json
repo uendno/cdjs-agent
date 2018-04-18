@@ -1,0 +1,7 @@
+{
+  "apps" : [{
+    "name"        : "cdjs-agent",
+    "script"      : "./index.js",
+    "args": ["--master-host=http://localhost:3001", "--socket-path=/socket.io", "--socket-namespace=/agent", "--token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZDQzZTEzZjg5MDJjMzQ2MDNhMDI0YyIsImlhdCI6MTUyMzg1ODk2M30.n6Vc_dyZqMNzI6409atVKEE4_MUfqQWdhUjyLt9Sioo"]
+  }]
+}
