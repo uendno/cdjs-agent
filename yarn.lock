@@ -86,10 +86,6 @@ colorspace@1.0.x:
     color "0.8.x"
     text-hex "0.0.x"
 
-commander@^2.12.2:
-  version "2.12.2"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
-
 component-bind@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/component-bind/-/component-bind-1.0.0.tgz#00c608ab7dcd93897c0009651b1d3a8e1e73bbd1"
@@ -121,6 +117,10 @@ diagnostics@^1.0.1:
     colorspace "1.0.x"
     enabled "1.0.x"
     kuler "0.0.x"
+
+dotenv@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
 
 enabled@1.0.x:
   version "1.0.2"
